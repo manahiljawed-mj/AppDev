@@ -1,0 +1,330 @@
+import 'package:alex_grant_ai/screens/profile.dart';
+import 'package:alex_grant_ai/screens/voice.dart';
+import 'package:flutter/material.dart';
+import 'mic.dart';
+import 'history.dart';
+import 'notification.dart'; // Import the HistoryScreen class
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  final List<Map<String, String>> _messages = [
+    {'sender': 'agent', 'text': 'What topic would you like to be generated for you today?'}
+  ];
+
+  // Variable to track which button is selected
+  String _selectedButton = '';
+
+  // List of action cards to be displayed initially
+  final List<String> actionCards = [
+    'Turn your ideas into stunning visuals!',
+    'Unlock creativity with articles that inspire!',
+    'Craft engaging stories tailored to captivate.',
+    'Share your idea with articles designed.',
+    'Transform thoughts into compelling narratives.',
+    'Generate impactful content for your ideas.'
+  ];
+
+  // Boolean to track if user has entered a prompt or not
+  bool _hasEnteredPrompt = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Action cards section (shown initially and hidden after user enters a prompt)
+            if (!_hasEnteredPrompt)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Column(
+                  children: actionCards.map((cardText) {
+                    return _buildActionCard(cardText);
+                  }).toList(),
+                ),
+              ),
+
+            // Chat messages
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  final message = _messages[index];
+                  final isUser = message['sender'] == 'user';
+                  return Align(
+                    alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: isUser
+                            ? Colors.purple.shade900
+                            : Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(16),
+                        border: isUser
+                            ? Border.all(color: Colors.purple, width: 2)
+                            : null,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (!isUser)
+                                CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: Colors.grey,
+                                  child: Image.asset(
+                                    "images/chat_logo_robot.png",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              if (!isUser) const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  message['text']!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              if (isUser) const SizedBox(width: 12),
+                              if (isUser)
+                                CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: Colors.purple.shade400,
+                                  child: Image.asset(
+                                    "images/user_chat_logo.png",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          // Add Share, Copy, Reload Buttons for both User and Agent Messages
+                          if (isUser)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.share, color: Colors.white54, size: 20),
+                                  onPressed: () {},
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.copy, color: Colors.white54, size: 20),
+                                  onPressed: () {},
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.refresh, color: Colors.white54, size: 20),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          if (!isUser)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.share, color: Colors.white54, size: 20),
+                                  onPressed: () {},
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.copy, color: Colors.white54, size: 20),
+                                  onPressed: () {},
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.refresh, color: Colors.white54, size: 20),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            // Input field
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.attach_file, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.qr_code_scanner, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Enter your prompt...',
+                        hintStyle: const TextStyle(color: Colors.white54),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                      ),
+                      onSubmitted: (value) => _sendMessage(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  IconButton(
+                    icon: const Icon(Icons.mic, color: Colors.white),
+                    onPressed: () {
+                      // Navigate to MicScreen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const VoiceCallScreen()),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.send, color: Colors.white),
+                    onPressed: _sendMessage,
+                  ),
+                ],
+              ),
+            ),
+
+            // Bottom navigation with click effect
+            Container(
+              color: Colors.grey.shade900,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavButton(Icons.home, "Home", 'home'),
+                  _buildNavButton(Icons.history, "History", 'history'),
+                  _buildNavButton(Icons.notifications, "Notifications", 'notifications'),
+                  _buildNavButton(Icons.person, "Profile", 'profile'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Action card widget
+  Widget _buildActionCard(String text) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.bolt, color: Colors.white, size: 28),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Send message function
+  void _sendMessage() {
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        _messages.add({'sender': 'user', 'text': _controller.text});
+        _messages.add({
+          'sender': 'agent',
+          'text': 'This is a dummy response to your prompt: "${_controller.text}"',
+        });
+        _controller.clear();
+        _hasEnteredPrompt = true;  // Disable cards after the first prompt is entered
+      });
+    }
+  }
+
+  // Navigation button for bottom bar
+  Widget _buildNavButton(IconData icon, String label, String value) {
+    return GestureDetector(
+      onTap: () {
+        if (value == 'history') {
+          // Navigate to HistoryScreen when the History button is tapped
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HistoryScreen()),
+          );
+        }
+
+        else if (value == 'notifications') {
+          // Navigate to HistoryScreen when the History button is tapped
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const NotificationsScreen()),
+          );
+        }
+
+        else if (value == 'profile') {
+          // Navigate to HistoryScreen when the History button is tapped
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsScreen()),
+          );
+        }
+
+
+        else {
+          setState(() {
+            _selectedButton = value;
+          });
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: _selectedButton == value ? Colors.purple : Colors.white,
+            size: 28,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: _selectedButton == value ? Colors.purple : Colors.white,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
