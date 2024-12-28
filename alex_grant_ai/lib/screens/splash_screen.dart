@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'splash_screen2.dart'; // Import the home screen
 
-
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -16,7 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), // Replace with your next screen
+        MaterialPageRoute(
+            builder: (context) =>
+                HomeScreen()), // Replace with your next screen
       );
     });
   }
@@ -28,7 +31,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
 class Home extends StatelessWidget {
+  const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +42,8 @@ class Home extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/rectangle_background.png"), // Replace with your asset path
+          image: AssetImage(
+              "assets/images/rectangle_background.png"), // Replace with your asset path
           fit: BoxFit.cover, // Adjust the image to cover the background
         ),
       ),

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart'; // Import the splash screen file
+import 'screens/currentChangePinScreen.dart';
+import 'screens/changePinConfirmationScreen.dart';
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -17,7 +19,8 @@ class FigmaToCodeApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
-      home: SplashScreen(), // Set the SplashScreen widget as home
+      home:
+          ChangePinConfirmationScreen(), // Set the SplashScreen widget as home
     );
   }
 }

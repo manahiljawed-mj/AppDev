@@ -12,8 +12,8 @@ class SignUp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
       home: Scaffold(
-
-        body: SingleChildScrollView( // Wrap the content with SingleChildScrollView
+        body: SingleChildScrollView(
+          // Wrap the content with SingleChildScrollView
           child: SignUpState(),
         ),
       ),
@@ -24,17 +24,26 @@ class SignUp extends StatelessWidget {
 class SignUpState extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
+  SignUpState({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(  // Wrap your body with SingleChildScrollView
-            child: Material(  // Make sure you
-                color: Colors.transparent,  // If you want a transparent background
+        body: SingleChildScrollView(
+            // Wrap your body with SingleChildScrollView
+            child: Material(
+                // Make sure you
+                color:
+                    Colors.transparent, // If you want a transparent background
                 child: Column(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width, // Full width of the screen
-                      height: MediaQuery.of(context).size.height, // Full height of the screen
+                      width: MediaQuery.of(context)
+                          .size
+                          .width, // Full width of the screen
+                      height: MediaQuery.of(context)
+                          .size
+                          .height, // Full height of the screen
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(color: Color(0xFF222222)),
                       child: Stack(
@@ -47,7 +56,8 @@ class SignUpState extends StatelessWidget {
                               height: MediaQuery.of(context).size.height,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage("assets/images/rectangle_background.png"),
+                                  image: AssetImage(
+                                      "assets/images/rectangle_background.png"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -62,10 +72,9 @@ class SignUpState extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 24,
                                     height: 24,
-
                                   ),
                                   const SizedBox(width: 51),
                                   Text(
@@ -78,10 +87,10 @@ class SignUpState extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                       height: 1.11,
                                       letterSpacing: -0.20,
-                                      decoration: TextDecoration.none,  // Add this line to remove any underline
+                                      decoration: TextDecoration
+                                          .none, // Add this line to remove any underline
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -96,13 +105,15 @@ class SignUpState extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   // Username TextField
-                                  Container(
+                                  SizedBox(
                                     width: 320,
                                     height: 88,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: 320,
@@ -114,7 +125,8 @@ class SignUpState extends StatelessWidget {
                                               fontFamily: 'Euclid Circular A',
                                               fontWeight: FontWeight.w500,
                                               height: 1.50,
-                                              decoration: TextDecoration.none,  // Add this line to remove any underline
+                                              decoration: TextDecoration
+                                                  .none, // Add this line to remove any underline
                                             ),
                                           ),
                                         ),
@@ -122,36 +134,51 @@ class SignUpState extends StatelessWidget {
                                         Container(
                                           width: 350,
                                           height: 56,
-                                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 8),
                                           decoration: ShapeDecoration(
                                             shape: RoundedRectangleBorder(
-                                              side: BorderSide(width: 1, color: Colors.white),
-                                              borderRadius: BorderRadius.circular(16),
+                                              side: BorderSide(
+                                                  width: 1,
+                                                  color: Colors.white),
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
                                             ),
                                           ),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               Container(
                                                 width: 24,
                                                 height: 24,
-                                                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 4,
+                                                        vertical: 3),
                                                 clipBehavior: Clip.antiAlias,
                                                 decoration: BoxDecoration(),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     // Replace the Icon with an Image.asset widget
                                                     Container(
-                                                      width: 18,  // Adjust the width and height to match the size of your icon
+                                                      width:
+                                                          18, // Adjust the width and height to match the size of your icon
                                                       height: 18,
-                                                      clipBehavior: Clip.antiAlias,
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
                                                       decoration: BoxDecoration(
-                                                        shape: BoxShape.circle, // If you want the image to be circular, use BoxShape.circle
+                                                        shape: BoxShape
+                                                            .circle, // If you want the image to be circular, use BoxShape.circle
                                                       ),
                                                       child: Image.asset(
                                                         'assets/images/fi_user.png', // Replace with your image path
@@ -162,25 +189,31 @@ class SignUpState extends StatelessWidget {
                                               ),
                                               Expanded(
                                                 child: TextField(
-                                                  controller: usernameController,
+                                                  controller:
+                                                      usernameController,
                                                   style: TextStyle(
                                                     color: Color(0xFF908A95),
                                                     fontSize: 14,
-                                                    fontFamily: 'Euclid Circular A',
+                                                    fontFamily:
+                                                        'Euclid Circular A',
                                                     fontWeight: FontWeight.w400,
                                                     height: 1.50,
-                                                    decoration: TextDecoration.none,
+                                                    decoration:
+                                                        TextDecoration.none,
                                                   ),
                                                   decoration: InputDecoration(
                                                     hintText: 'Your username',
                                                     hintStyle: TextStyle(
                                                       color: Color(0xFF908A95),
                                                       fontSize: 14,
-                                                      fontFamily: 'Euclid Circular A',
-                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily:
+                                                          'Euclid Circular A',
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       height: 1.50,
                                                     ),
-                                                    border: InputBorder.none,  // Removes the border
+                                                    border: InputBorder
+                                                        .none, // Removes the border
                                                   ),
                                                 ),
                                               ),
@@ -191,13 +224,15 @@ class SignUpState extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 16),
-                                  Container(
+                                  SizedBox(
                                     width: 350,
                                     height: 88,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: 350,
@@ -209,7 +244,8 @@ class SignUpState extends StatelessWidget {
                                               fontFamily: 'Euclid Circular A',
                                               fontWeight: FontWeight.w500,
                                               height: 1.50,
-                                              decoration: TextDecoration.none,  // Add this line to remove any underline
+                                              decoration: TextDecoration
+                                                  .none, // Add this line to remove any underline
                                             ),
                                           ),
                                         ),
@@ -217,39 +253,54 @@ class SignUpState extends StatelessWidget {
                                         Container(
                                           width: 320,
                                           height: 56,
-                                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 8),
                                           decoration: ShapeDecoration(
                                             shape: RoundedRectangleBorder(
-                                              side: BorderSide(width: 1, color: Colors.white),
-                                              borderRadius: BorderRadius.circular(16),
+                                              side: BorderSide(
+                                                  width: 1,
+                                                  color: Colors.white),
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
                                             ),
                                           ),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               Container(
                                                 width: 24,
                                                 height: 24,
-                                                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 4,
+                                                        vertical: 3),
                                                 clipBehavior: Clip.antiAlias,
                                                 decoration: BoxDecoration(),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     // Replace the Icon with an Image.asset widget
                                                     Container(
-                                                      width: 18,  // Adjust the width and height to match the size of your icon
+                                                      width:
+                                                          18, // Adjust the width and height to match the size of your icon
                                                       height: 18,
-                                                      clipBehavior: Clip.antiAlias,
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
                                                       decoration: BoxDecoration(
-                                                        shape: BoxShape.circle, // If you want the image to be circular, use BoxShape.circle
+                                                        shape: BoxShape
+                                                            .circle, // If you want the image to be circular, use BoxShape.circle
                                                       ),
                                                       child: Image.asset(
-                                                        'assets/images/fi_mail.png' , // Replace with your image path
+                                                        'assets/images/fi_mail.png', // Replace with your image path
                                                       ),
                                                     ),
                                                   ],
@@ -261,35 +312,43 @@ class SignUpState extends StatelessWidget {
                                                   style: TextStyle(
                                                     color: Color(0xFF908A95),
                                                     fontSize: 14,
-                                                    fontFamily: 'Euclid Circular A',
+                                                    fontFamily:
+                                                        'Euclid Circular A',
                                                     fontWeight: FontWeight.w400,
                                                     height: 1.50,
-                                                    decoration: TextDecoration.none,
+                                                    decoration:
+                                                        TextDecoration.none,
                                                   ),
                                                   decoration: InputDecoration(
-                                                    hintText: 'Myemail@mail.com',
+                                                    hintText:
+                                                        'Myemail@mail.com',
                                                     hintStyle: TextStyle(
                                                       color: Color(0xFF908A95),
                                                       fontSize: 14,
-                                                      fontFamily: 'Euclid Circular A',
-                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily:
+                                                          'Euclid Circular A',
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       height: 1.50,
                                                     ),
-                                                    border: InputBorder.none,  // Removes the border
+                                                    border: InputBorder
+                                                        .none, // Removes the border
                                                   ),
                                                   // Validator to check if email format is valid
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Please enter an email';
                                                     }
                                                     // Regular expression for email validation
                                                     final emailRegex = RegExp(
                                                       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                                                     );
-                                                    if (!emailRegex.hasMatch(value)) {
+                                                    if (!emailRegex
+                                                        .hasMatch(value)) {
                                                       return 'Please enter a valid email';
                                                     }
-                                                    return null;  // No error
+                                                    return null; // No error
                                                   },
                                                 ),
                                               ),
@@ -307,7 +366,7 @@ class SignUpState extends StatelessWidget {
                             left: 21,
                             top: 444,
                             right: 10,
-                            child: Container(
+                            child: SizedBox(
                               width: 348,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -320,7 +379,8 @@ class SignUpState extends StatelessWidget {
                                         shape: RoundedRectangleBorder(
                                           side: BorderSide(
                                             width: 1,
-                                            strokeAlign: BorderSide.strokeAlignCenter,
+                                            strokeAlign:
+                                                BorderSide.strokeAlignCenter,
                                             color: Color(0xFF334155),
                                           ),
                                         ),
@@ -337,7 +397,8 @@ class SignUpState extends StatelessWidget {
                                       fontFamily: 'SF Pro Display',
                                       fontWeight: FontWeight.w400,
                                       height: 1.50,
-                                      decoration: TextDecoration.none,  // Add this line to remove any underline
+                                      decoration: TextDecoration
+                                          .none, // Add this line to remove any underline
                                     ),
                                   ),
                                   const SizedBox(width: 16),
@@ -347,7 +408,8 @@ class SignUpState extends StatelessWidget {
                                         shape: RoundedRectangleBorder(
                                           side: BorderSide(
                                             width: 1,
-                                            strokeAlign: BorderSide.strokeAlignCenter,
+                                            strokeAlign:
+                                                BorderSide.strokeAlignCenter,
                                             color: Color(0xFF334155),
                                           ),
                                         ),
@@ -363,11 +425,13 @@ class SignUpState extends StatelessWidget {
                             top: 505,
                             right: 0,
                             child: Align(
-                              alignment: Alignment.center, // Centers the entire Column inside the Positioned widget
+                              alignment: Alignment
+                                  .center, // Centers the entire Column inside the Positioned widget
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,  // Center the buttons horizontally
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .center, // Center the buttons horizontally
                                 children: [
                                   // Apple button
                                   Container(
@@ -388,8 +452,11 @@ class SignUpState extends StatelessWidget {
                                             height: 56,
                                             decoration: ShapeDecoration(
                                               shape: RoundedRectangleBorder(
-                                                side: BorderSide(width: 1, color: Colors.white),
-                                                borderRadius: BorderRadius.circular(16),
+                                                side: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.white),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
                                               ),
                                             ),
                                           ),
@@ -402,7 +469,8 @@ class SignUpState extends StatelessWidget {
                                             alignment: Alignment.topLeft,
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.center,  // Align text and image vertically centered
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .center, // Align text and image vertically centered
                                               children: [
                                                 Container(
                                                   width: 25.69,
@@ -415,17 +483,21 @@ class SignUpState extends StatelessWidget {
                                                     height: 24,
                                                   ),
                                                 ),
-                                                SizedBox(width: 8),  // Adds space between the image and the text
+                                                SizedBox(
+                                                    width:
+                                                        8), // Adds space between the image and the text
                                                 Text(
                                                   'Continue with Apple',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 16,
-                                                    fontFamily: 'Euclid Circular A',
+                                                    fontFamily:
+                                                        'Euclid Circular A',
                                                     fontWeight: FontWeight.w600,
                                                     height: 1.40,
-                                                    decoration: TextDecoration.none,  // Add this line to remove any underline
+                                                    decoration: TextDecoration
+                                                        .none, // Add this line to remove any underline
                                                   ),
                                                 ),
                                               ],
@@ -435,7 +507,9 @@ class SignUpState extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(height: 16), // Adds space between the buttons
+                                  const SizedBox(
+                                      height:
+                                          16), // Adds space between the buttons
 
                                   // Google button (updated and added)
                                   Container(
@@ -456,8 +530,11 @@ class SignUpState extends StatelessWidget {
                                             height: 56,
                                             decoration: ShapeDecoration(
                                               shape: RoundedRectangleBorder(
-                                                side: BorderSide(width: 1, color: Colors.white),
-                                                borderRadius: BorderRadius.circular(16),
+                                                side: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.white),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
                                               ),
                                             ),
                                           ),
@@ -470,7 +547,8 @@ class SignUpState extends StatelessWidget {
                                             alignment: Alignment.topLeft,
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.center,  // Align text and image vertically centered
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .center, // Align text and image vertically centered
                                               children: [
                                                 Container(
                                                   width: 25.69,
@@ -483,17 +561,21 @@ class SignUpState extends StatelessWidget {
                                                     height: 24,
                                                   ),
                                                 ),
-                                                SizedBox(width: 8),  // Adds space between the image and the text
+                                                SizedBox(
+                                                    width:
+                                                        8), // Adds space between the image and the text
                                                 Text(
                                                   'Continue with Google',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 16,
-                                                    fontFamily: 'Euclid Circular A',
+                                                    fontFamily:
+                                                        'Euclid Circular A',
                                                     fontWeight: FontWeight.w600,
                                                     height: 1.40,
-                                                    decoration: TextDecoration.none,  // Add this line to remove any underline
+                                                    decoration: TextDecoration
+                                                        .none, // Add this line to remove any underline
                                                   ),
                                                 ),
                                               ],
@@ -523,7 +605,8 @@ class SignUpState extends StatelessWidget {
                                         fontFamily: 'Euclid Circular A',
                                         fontWeight: FontWeight.w400,
                                         height: 1.50,
-                                        decoration: TextDecoration.none,  // Add this line to remove any underline
+                                        decoration: TextDecoration
+                                            .none, // Add this line to remove any underline
                                       ),
                                     ),
                                     TextSpan(
@@ -534,7 +617,8 @@ class SignUpState extends StatelessWidget {
                                         fontFamily: 'SF Pro Display',
                                         fontWeight: FontWeight.w400,
                                         height: 1.50,
-                                        decoration: TextDecoration.none,  // Add this line to remove any underline
+                                        decoration: TextDecoration
+                                            .none, // Add this line to remove any underline
                                       ),
                                     ),
                                     TextSpan(
@@ -545,7 +629,8 @@ class SignUpState extends StatelessWidget {
                                         fontFamily: 'Euclid Circular A',
                                         fontWeight: FontWeight.w700,
                                         height: 1.50,
-                                        decoration: TextDecoration.none,  // Add this line to remove any underline
+                                        decoration: TextDecoration
+                                            .none, // Add this line to remove any underline
                                       ),
                                     ),
                                     TextSpan(
@@ -556,7 +641,8 @@ class SignUpState extends StatelessWidget {
                                         fontFamily: 'SF Pro Display',
                                         fontWeight: FontWeight.w700,
                                         height: 1.50,
-                                        decoration: TextDecoration.none,  // Add this line to remove any underline
+                                        decoration: TextDecoration
+                                            .none, // Add this line to remove any underline
                                       ),
                                     ),
                                     TextSpan(
@@ -567,7 +653,8 @@ class SignUpState extends StatelessWidget {
                                         fontFamily: 'Euclid Circular A',
                                         fontWeight: FontWeight.w700,
                                         height: 1.50,
-                                        decoration: TextDecoration.none,  // Add this line to remove any underline
+                                        decoration: TextDecoration
+                                            .none, // Add this line to remove any underline
                                       ),
                                     ),
                                   ],
@@ -581,16 +668,20 @@ class SignUpState extends StatelessWidget {
                             right: 0,
                             top: 348, // Keep the vertical position as it is
                             child: Align(
-                              alignment: Alignment.center, // Center the button horizontally
+                              alignment: Alignment
+                                  .center, // Center the button horizontally
                               child: Material(
-                                color: Colors.transparent, // Makes the Material background transparent
+                                color: Colors
+                                    .transparent, // Makes the Material background transparent
                                 child: Container(
                                   width: 320,
                                   height: 56,
                                   decoration: ShapeDecoration(
-                                    color: Color(0xFF5E216D), // Set background color for button using hex color
+                                    color: Color(
+                                        0xFF5E216D), // Set background color for button using hex color
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16), // Rounded corners
+                                      borderRadius: BorderRadius.circular(
+                                          16), // Rounded corners
                                     ),
                                   ),
                                   child: InkWell(
@@ -599,7 +690,8 @@ class SignUpState extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => PasswordState(), // Replace NewPage with your desired page
+                                          builder: (context) =>
+                                              PasswordState(), // Replace NewPage with your desired page
                                         ),
                                       );
                                       // Add your onTap logic here
@@ -615,7 +707,8 @@ class SignUpState extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                           height: 1,
                                           letterSpacing: -0.40,
-                                          decoration: TextDecoration.none,  // Remove any underline
+                                          decoration: TextDecoration
+                                              .none, // Remove any underline
                                         ),
                                       ),
                                     ),
@@ -624,15 +717,10 @@ class SignUpState extends StatelessWidget {
                               ),
                             ),
                           )
-
                         ],
                       ),
                     )
-
                   ],
-                )
-            )
-        )
-    );
+                ))));
   }
 }

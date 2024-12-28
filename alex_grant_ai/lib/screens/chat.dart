@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'mic.dart';
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
 
@@ -40,7 +41,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.notifications, color: Colors.white, size: 28),
+                    icon: const Icon(Icons.notifications,
+                        color: Colors.white, size: 28),
                     onPressed: () {},
                   ),
                 ],
@@ -52,12 +54,18 @@ class _ChatScreenState extends State<ChatScreen> {
                 Expanded(
                   child: ListView(
                     children: [
-                      _buildActionCard('Turn your ideas into stunning visuals!'),
-                      _buildActionCard('Unlock creativity with articles that inspire!'),
-                      _buildActionCard('Craft engaging stories tailored to captivate.'),
-                      _buildActionCard('Share your idea with articles designed.'),
-                      _buildActionCard('Transform thoughts into compelling narratives.'),
-                      _buildActionCard('Generate impactful content for your ideas.'),
+                      _buildActionCard(
+                          'Turn your ideas into stunning visuals!'),
+                      _buildActionCard(
+                          'Unlock creativity with articles that inspire!'),
+                      _buildActionCard(
+                          'Craft engaging stories tailored to captivate.'),
+                      _buildActionCard(
+                          'Share your idea with articles designed.'),
+                      _buildActionCard(
+                          'Transform thoughts into compelling narratives.'),
+                      _buildActionCard(
+                          'Generate impactful content for your ideas.'),
                     ],
                   ),
                 ),
@@ -88,18 +96,22 @@ class _ChatScreenState extends State<ChatScreen> {
                               children: [
                                 // Mic Icon
                                 IconButton(
-                                  icon: const Icon(Icons.mic, color: Colors.white),
+                                  icon: const Icon(Icons.mic,
+                                      color: Colors.white),
                                   onPressed: () {
                                     // Navigate to the MicScreen when mic is pressed
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => const MicScreen()),
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MicScreen()),
                                     );
                                   },
                                 ),
                                 // Attachment Icon
                                 IconButton(
-                                  icon: const Icon(Icons.attach_file, color: Colors.white),
+                                  icon: const Icon(Icons.attach_file,
+                                      color: Colors.white),
                                   onPressed: () {
                                     // Handle file attachment action
                                     print('Attachment activated');
@@ -107,7 +119,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ),
                                 // Camera (Scan) Icon
                                 IconButton(
-                                  icon: const Icon(Icons.camera_alt, color: Colors.white),
+                                  icon: const Icon(Icons.camera_alt,
+                                      color: Colors.white),
                                   onPressed: () {
                                     // Handle scan action
                                     print('Scan activated');
@@ -184,11 +197,13 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildNavBarIcon(IconData icon, String label, {bool isActive = false}) {
+  Widget _buildNavBarIcon(IconData icon, String label,
+      {bool isActive = false}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: isActive ? const Color(0xFF5E216D) : Colors.grey, size: 28),
+        Icon(icon,
+            color: isActive ? const Color(0xFF5E216D) : Colors.grey, size: 28),
         const SizedBox(height: 4),
         Text(
           label,

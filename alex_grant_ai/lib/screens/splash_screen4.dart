@@ -1,8 +1,9 @@
 import 'package:alex_grant_ai/screens/sign_up.dart';
 import 'package:alex_grant_ai/screens/slpash_screen3.dart';
 import 'package:flutter/material.dart';
+
 class SplashScreen04 extends StatelessWidget {
-  const SplashScreen04 ({super.key});
+  const SplashScreen04({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,10 @@ class SplashScreen04 extends StatelessWidget {
     );
   }
 }
+
 class SplashScreen4 extends StatelessWidget {
+  const SplashScreen4({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,7 +59,8 @@ class SplashScreen4 extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
                           color: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -65,7 +70,8 @@ class SplashScreen4 extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
                           color: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -75,7 +81,8 @@ class SplashScreen4 extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
                           color: Color(0xFF7A3AA2),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
                         ),
                       ),
                     ],
@@ -132,49 +139,52 @@ class SplashScreen4 extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignUpState(), // Replace NextScreen with your target screen
+                        builder: (context) =>
+                            SignUpState(), // Replace NextScreen with your target screen
                       ),
                     );
                   },
-                child: Container(
-                  width: 366,
-                  height: 56,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF5E216D),  // Set the background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    width: 366,
+                    height: 56,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: Color(0xFF5E216D), // Set the background color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 145,
-                        top: 20,
-                        child: Text(
-                          'Start Chat',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: 'Euclid Circular A',
-                            fontWeight: FontWeight.w500,
-                            height: 1,
-                            letterSpacing: -0.40,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 145,
+                          top: 20,
+                          child: Text(
+                            'Start Chat',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'Euclid Circular A',
+                              fontWeight: FontWeight.w500,
+                              height: 1,
+                              letterSpacing: -0.40,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 ),
               ),
               Positioned(
                 left: 175.11,
                 top: 132.75,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(0.29),
-                  child: Container(
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(0.29),
+                  child: SizedBox(
                     width: 76.50,
                     height: 31.14,
                     child: Stack(),
@@ -207,8 +217,10 @@ class SplashScreen4 extends StatelessWidget {
                   height: 514,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/robot3.png"), // Replace with your asset path
-                      fit: BoxFit.cover, // Adjust the image to cover the background
+                      image: AssetImage(
+                          "assets/images/robot3.png"), // Replace with your asset path
+                      fit: BoxFit
+                          .cover, // Adjust the image to cover the background
                     ),
                   ),
                 ),
@@ -217,8 +229,10 @@ class SplashScreen4 extends StatelessWidget {
                 left: 322,
                 top: 700.44,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
-                  child: Container(
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(3.14),
+                  child: SizedBox(
                     width: 230,
                     height: 44.44,
                     child: Stack(),
@@ -231,20 +245,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 44.05,
                   height: 51.79,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.84, vertical: 2.16),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.84, vertical: 2.16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -254,20 +269,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 33,
                   height: 39,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.38, vertical: 1.62),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.38, vertical: 1.62),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -277,20 +293,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 33,
                   height: 39,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.38, vertical: 1.62),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.38, vertical: 1.62),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -300,20 +317,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 44.05,
                   height: 51.79,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.84, vertical: 2.16),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.84, vertical: 2.16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -323,20 +341,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 44.05,
                   height: 51.79,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.84, vertical: 2.16),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.84, vertical: 2.16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -346,20 +365,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 22,
                   height: 26,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.92, vertical: 1.08),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.92, vertical: 1.08),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -369,20 +389,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 22,
                   height: 26,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.92, vertical: 1.08),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.92, vertical: 1.08),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -392,20 +413,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 22,
                   height: 26,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.92, vertical: 1.08),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.92, vertical: 1.08),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -415,20 +437,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 44.05,
                   height: 51.79,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.84, vertical: 2.16),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.84, vertical: 2.16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -438,20 +461,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 25,
                   height: 30,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.04, vertical: 1.25),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.04, vertical: 1.25),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -461,20 +485,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 25,
                   height: 30,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.04, vertical: 1.25),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.04, vertical: 1.25),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -484,20 +509,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 25,
                   height: 30,
-                  padding: const EdgeInsets.symmetric(horizontal: 1.04, vertical: 1.25),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 1.04, vertical: 1.25),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -507,20 +533,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 12.85,
                   height: 15.11,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.54, vertical: 0.63),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.54, vertical: 0.63),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -530,20 +557,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 12.85,
                   height: 15.11,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.54, vertical: 0.63),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.54, vertical: 0.63),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -553,20 +581,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 12.85,
                   height: 15.11,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.54, vertical: 0.63),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.54, vertical: 0.63),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -576,20 +605,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 12.85,
                   height: 15.11,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.54, vertical: 0.63),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.54, vertical: 0.63),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -599,20 +629,21 @@ class SplashScreen4 extends StatelessWidget {
                 child: Container(
                   width: 12.85,
                   height: 15.11,
-                  padding: const EdgeInsets.symmetric(horizontal: 0.54, vertical: 0.63),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.54, vertical: 0.63),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            width: 44.05,
-                            height: 51.79,
-                          ),
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/star.png',
+                          width: 44.05,
+                          height: 51.79,
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
               ),

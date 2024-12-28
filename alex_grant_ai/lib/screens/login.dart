@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'chat.dart'; // Import the ChatScreen file
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -73,7 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.grey[600],
                     size: 22,
                   ),
-                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  onPressed: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
                 ),
               ),
               const SizedBox(height: 16),
@@ -86,9 +87,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Switch(
                         value: _rememberMe,
-                        onChanged: (value) => setState(() => _rememberMe = value),
+                        onChanged: (value) =>
+                            setState(() => _rememberMe = value),
                         activeColor: const Color(0xFF5E216D),
-                        activeTrackColor: const Color(0xFF5E216D).withOpacity(0.5),
+                        activeTrackColor:
+                            const Color(0xFF5E216D).withOpacity(0.5),
                       ),
                       const Text(
                         'Remember me',
@@ -126,7 +129,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ChatScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const ChatScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

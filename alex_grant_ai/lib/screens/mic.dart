@@ -28,7 +28,8 @@ class MicScreen extends StatelessWidget {
             // Profile Image
             CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'), // Sample profile image
+              backgroundImage: NetworkImage(
+                  'https://via.placeholder.com/150'), // Sample profile image
             ),
             const SizedBox(height: 20),
 
@@ -75,7 +76,8 @@ class MicScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildControlButton(IconData icon, Color color, VoidCallback onPressed) {
+  Widget _buildControlButton(
+      IconData icon, Color color, VoidCallback onPressed) {
     return IconButton(
       icon: Icon(icon, color: color, size: 40),
       onPressed: onPressed,

@@ -31,10 +31,11 @@ class OtpState extends StatefulWidget {
 
 class _OtpState extends State<OtpState> {
   final TextEditingController passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
+  final bool _isPasswordVisible = false;
   int _timeRemaining = 45;
   Timer? _timer; // Make _timer nullable to handle initialization safely
-  final List<TextEditingController> otpControllers = List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> otpControllers =
+      List.generate(4, (_) => TextEditingController());
   final List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
 
   @override
@@ -126,8 +127,12 @@ class _OtpState extends State<OtpState> {
           child: Column(
             children: [
               Container(
-                width: MediaQuery.of(context).size.width, // Full width of the screen
-                height: MediaQuery.of(context).size.height, // Full height of the screen
+                width: MediaQuery.of(context)
+                    .size
+                    .width, // Full width of the screen
+                height: MediaQuery.of(context)
+                    .size
+                    .height, // Full height of the screen
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   color: const Color(0xFF222222), // Container color
@@ -142,7 +147,8 @@ class _OtpState extends State<OtpState> {
                         height: MediaQuery.of(context).size.height,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/rectangle_background.png"),
+                            image: AssetImage(
+                                "assets/images/rectangle_background.png"),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -157,7 +163,7 @@ class _OtpState extends State<OtpState> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 24,
                               height: 24,
                             ),
@@ -172,7 +178,8 @@ class _OtpState extends State<OtpState> {
                                 fontWeight: FontWeight.w500,
                                 height: 1.11,
                                 letterSpacing: -0.20,
-                                decoration: TextDecoration.none,  // Add this line to remove any underline
+                                decoration: TextDecoration
+                                    .none, // Add this line to remove any underline
                               ),
                             ),
                           ],
@@ -230,7 +237,8 @@ class _OtpState extends State<OtpState> {
                                     ),
                                   ],
                                 ),
-                                overflow: TextOverflow.ellipsis, // Prevent text overflow if it gets too long
+                                overflow: TextOverflow
+                                    .ellipsis, // Prevent text overflow if it gets too long
                               ),
                             ),
                           ],
@@ -241,10 +249,12 @@ class _OtpState extends State<OtpState> {
                       left: 48,
                       top: 308,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
                         decoration: ShapeDecoration(
                           color: Color(0x662A232F),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -293,13 +303,17 @@ class _OtpState extends State<OtpState> {
                       right: 0,
                       child: Container(
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,  // Ensure the Row takes up the full available width
-                          mainAxisAlignment: MainAxisAlignment.center,  // Center the content in the Row
-                          crossAxisAlignment: CrossAxisAlignment.center,  // Vertically center the children
+                          mainAxisSize: MainAxisSize
+                              .max, // Ensure the Row takes up the full available width
+                          mainAxisAlignment: MainAxisAlignment
+                              .center, // Center the content in the Row
+                          crossAxisAlignment: CrossAxisAlignment
+                              .center, // Vertically center the children
                           children: [
                             ...List.generate(4, (index) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Container(
                                   width: 64,
                                   height: 64,
@@ -311,19 +325,24 @@ class _OtpState extends State<OtpState> {
                                   child: TextField(
                                     controller: otpControllers[index],
                                     focusNode: focusNodes[index],
-                                    maxLength: 1, // Limit input to a single character
+                                    maxLength:
+                                        1, // Limit input to a single character
                                     keyboardType: TextInputType.number,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 26,
                                       fontFamily: 'Euclid Circular A',
                                       fontWeight: FontWeight.w600,
-                                      height: 1.54, // Adjust the height to match the original text
+                                      height:
+                                          1.54, // Adjust the height to match the original text
                                     ),
-                                    textAlign: TextAlign.center, // Center the text horizontally
-                                    textAlignVertical: TextAlignVertical.center, // Center the text vertically
+                                    textAlign: TextAlign
+                                        .center, // Center the text horizontally
+                                    textAlignVertical: TextAlignVertical
+                                        .center, // Center the text vertically
                                     decoration: InputDecoration(
-                                      counterText: '', // Hide the character counter
+                                      counterText:
+                                          '', // Hide the character counter
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide.none,
                                         borderRadius: BorderRadius.circular(10),
@@ -332,7 +351,8 @@ class _OtpState extends State<OtpState> {
                                       fillColor: Color(0xFF2A232F),
                                     ),
                                     onChanged: (value) {
-                                      _onChanged(value, index); // Handle input change
+                                      _onChanged(
+                                          value, index); // Handle input change
                                     },
                                   ),
                                 ),
@@ -342,27 +362,29 @@ class _OtpState extends State<OtpState> {
                         ),
                       ),
                     ),
-
                     Positioned(
                       left: 0,
                       right: 0,
                       top: 430, // Keep the vertical position as it is
                       child: Align(
-                        alignment: Alignment.center, // Center the button horizontally
+                        alignment:
+                            Alignment.center, // Center the button horizontally
                         child: Material(
-                          color: Colors.transparent, // Makes the Material background transparent
+                          color: Colors
+                              .transparent, // Makes the Material background transparent
                           child: Container(
                             width: 320,
                             height: 56,
                             decoration: ShapeDecoration(
-                              color: Color(0xFF5E216D), // Set background color for button using hex color
+                              color: Color(
+                                  0xFF5E216D), // Set background color for button using hex color
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16), // Rounded corners
+                                borderRadius: BorderRadius.circular(
+                                    16), // Rounded corners
                               ),
                             ),
                             child: InkWell(
                               onTap: () {
-
                                 print('Button clicked!');
                                 // Add your onTap logic here
                                 _showOtpVerifiedSuccessfullyModal(context);
@@ -378,7 +400,8 @@ class _OtpState extends State<OtpState> {
                                     fontWeight: FontWeight.w600,
                                     height: 1,
                                     letterSpacing: -0.40,
-                                    decoration: TextDecoration.none,  // Remove any underline
+                                    decoration: TextDecoration
+                                        .none, // Remove any underline
                                   ),
                                 ),
                               ),
@@ -387,7 +410,6 @@ class _OtpState extends State<OtpState> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -399,8 +421,6 @@ class _OtpState extends State<OtpState> {
   }
 }
 
-
-
 void _showOtpVerifiedSuccessfullyModal(BuildContext context) {
   showDialog(
     context: context,
@@ -408,7 +428,8 @@ void _showOtpVerifiedSuccessfullyModal(BuildContext context) {
     builder: (BuildContext context) {
       return Dialog(
         backgroundColor: Colors.transparent, // Transparent background
-        child: Center( // Center the modal in the middle of the screen
+        child: Center(
+          // Center the modal in the middle of the screen
           child: Container(
             width: 400,
             height: 450,
@@ -421,10 +442,12 @@ void _showOtpVerifiedSuccessfullyModal(BuildContext context) {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between text and button
+              mainAxisAlignment: MainAxisAlignment
+                  .spaceBetween, // Space between text and button
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 20), // Add space on top of the animated checkmark
+                const SizedBox(
+                    height: 20), // Add space on top of the animated checkmark
                 AnimatedCheckmark(), // Add the animated checkmark here
                 const SizedBox(height: 20), // Add space below the checkmark
                 SizedBox(
@@ -446,11 +469,14 @@ void _showOtpVerifiedSuccessfullyModal(BuildContext context) {
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the modal
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const LoginScreen()), // Navigate to the Login screen
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const LoginScreen()), // Navigate to the Login screen
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF5E216D), // Set background color here
+                    backgroundColor:
+                        Color(0xFF5E216D), // Set background color here
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -459,7 +485,8 @@ void _showOtpVerifiedSuccessfullyModal(BuildContext context) {
                   child: Text(
                     'Login to Your Account',
                     textAlign: TextAlign.center, // Center-align the text
-                    overflow: TextOverflow.ellipsis, // Handle overflow with an ellipsis
+                    overflow: TextOverflow
+                        .ellipsis, // Handle overflow with an ellipsis
                     maxLines: 1, // Ensure the text stays on one line
                     style: TextStyle(
                       color: Colors.white,
@@ -481,6 +508,8 @@ void _showOtpVerifiedSuccessfullyModal(BuildContext context) {
 }
 
 class AnimatedCheckmark extends StatefulWidget {
+  const AnimatedCheckmark({super.key});
+
   @override
   _AnimatedCheckmarkState createState() => _AnimatedCheckmarkState();
 }

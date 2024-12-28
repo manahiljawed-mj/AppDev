@@ -1,8 +1,9 @@
 import 'package:alex_grant_ai/screens/slpash_screen3.dart';
 import 'package:alex_grant_ai/screens/splash_screen4.dart';
 import 'package:flutter/material.dart';
+
 class SplashScreen03 extends StatelessWidget {
-  const SplashScreen03 ({super.key});
+  const SplashScreen03({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,8 @@ class SplashScreen03 extends StatelessWidget {
 }
 
 class SplashScreen3 extends StatelessWidget {
+  const SplashScreen3({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +59,8 @@ class SplashScreen3 extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
                           color: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -66,7 +70,8 @@ class SplashScreen3 extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
                           color: Color(0xFF7A3AA2),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -76,7 +81,8 @@ class SplashScreen3 extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
                           color: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
                         ),
                       ),
                     ],
@@ -129,69 +135,72 @@ class SplashScreen3 extends StatelessWidget {
               Positioned(
                 left: 17,
                 top: 726,
-                right:10,
+                right: 10,
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to another screen when the button is clicked
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SplashScreen04(), // Replace NextScreen with your target screen
+                        builder: (context) =>
+                            SplashScreen04(), // Replace NextScreen with your target screen
                       ),
                     );
                   },
-                child: Container(
-                  width: 356,
-                  height: 56,
-                  padding: const EdgeInsets.all(10),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFAE70DD),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1.50,
-                        strokeAlign: BorderSide.strokeAlignCenter,
-                        color: Color(0xFF74359D),
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x7FC7A2E9),
-                        blurRadius: 0,
-                        offset: Offset(0, 0),
-                        spreadRadius: 2,
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Continue',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Euclid Circular A',
-                          fontWeight: FontWeight.w500,
-                          height: 1,
-                          letterSpacing: -0.40,
+                  child: Container(
+                    width: 356,
+                    height: 56,
+                    padding: const EdgeInsets.all(10),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: Color(0xFFAE70DD),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1.50,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: Color(0xFF74359D),
                         ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ],
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x7FC7A2E9),
+                          blurRadius: 0,
+                          offset: Offset(0, 0),
+                          spreadRadius: 2,
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Continue',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: 'Euclid Circular A',
+                            fontWeight: FontWeight.w500,
+                            height: 1,
+                            letterSpacing: -0.40,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 ),
               ),
               Positioned(
                 left: 241.11,
                 top: 124.75,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(0.29),
-                  child: Container(
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(0.29),
+                  child: SizedBox(
                     width: 76.50,
                     height: 31.14,
                     child: Stack(),
@@ -225,8 +234,10 @@ class SplashScreen3 extends StatelessWidget {
                   height: 473,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/robot2.png"), // Replace with your asset path
-                      fit: BoxFit.cover, // Adjust the image to cover the background
+                      image: AssetImage(
+                          "assets/images/robot2.png"), // Replace with your asset path
+                      fit: BoxFit
+                          .cover, // Adjust the image to cover the background
                     ),
                   ),
                 ),
@@ -235,8 +246,10 @@ class SplashScreen3 extends StatelessWidget {
                 left: 320,
                 top: 706.44,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
-                  child: Container(
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(3.14),
+                  child: SizedBox(
                     width: 230,
                     height: 44.44,
                     child: Stack(),
@@ -247,11 +260,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 77,
                 top: 507,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 31,
                     height: 37,
-                    padding: const EdgeInsets.symmetric(horizontal: 1.29, vertical: 1.54),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.29, vertical: 1.54),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -273,11 +289,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 333,
                 top: 592,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 42,
                     height: 50,
-                    padding: const EdgeInsets.symmetric(horizontal: 1.75, vertical: 2.08),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.75, vertical: 2.08),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -299,11 +318,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 122,
                 top: 613,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 42,
                     height: 50,
-                    padding: const EdgeInsets.symmetric(horizontal: 1.75, vertical: 2.08),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.75, vertical: 2.08),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -325,7 +347,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 309,
                 top: 466,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 21,
                     height: 25,
@@ -356,7 +380,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 303,
                 top: 495,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -387,7 +413,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 141,
                 top: 572,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -418,7 +446,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 92,
                 top: 458,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -449,7 +479,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 281,
                 top: 572,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -480,7 +512,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 332,
                 top: 505,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -511,7 +545,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 80,
                 top: 550,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -542,7 +578,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 96,
                 top: 493,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 9,
                     height: 11,
@@ -573,7 +611,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 326,
                 top: 424,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 21,
                     height: 25,
@@ -604,11 +644,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 343,
                 top: 388,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 31,
                     height: 37,
-                    padding: const EdgeInsets.symmetric(horizontal: 1.29, vertical: 1.54),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.29, vertical: 1.54),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -630,11 +673,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 332,
                 top: 320,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 42,
                     height: 50,
-                    padding: const EdgeInsets.symmetric(horizontal: 1.75, vertical: 2.08),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.75, vertical: 2.08),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -656,11 +702,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 98,
                 top: 305,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 31,
                     height: 37,
-                    padding: const EdgeInsets.symmetric(horizontal: 1.29, vertical: 1.54),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 1.29, vertical: 1.54),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -682,11 +731,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 130,
                 top: 283,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 13,
                     height: 16,
-                    padding: const EdgeInsets.symmetric(horizontal: 0.54, vertical: 0.67),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 0.54, vertical: 0.67),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -708,11 +760,14 @@ class SplashScreen3 extends StatelessWidget {
                 left: 106,
                 top: 429,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 16,
                     height: 19,
-                    padding: const EdgeInsets.symmetric(horizontal: 0.67, vertical: 0.79),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 0.67, vertical: 0.79),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -734,7 +789,9 @@ class SplashScreen3 extends StatelessWidget {
                 left: 272,
                 top: 273,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(-3.14),
                   child: Container(
                     width: 12,
                     height: 12,
