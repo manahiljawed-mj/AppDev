@@ -1,3 +1,4 @@
+import 'package:alex_grant_ai/screens/subscription_popup.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -113,13 +114,15 @@ class _VoiceCallScreenState extends State<VoiceCallScreen>
                         icon: const Icon(Icons.pause, color: Colors.white, size: 24),
                         onPressed: () {},
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF1A1A1A),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.mic, color: Colors.white, size: 24),
+                      IconButton(
+                        icon: const Icon(Icons.mic, color: Colors.white, size: 24),
+                        onPressed: () {
+                          // Navigate to PricingScreen when the mic button is pressed
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const PricingScreen()),
+                          );
+                        },
                       ),
                       IconButton(
                         icon: const Icon(Icons.call_end, color: Color(0xFFFF375F), size: 24),

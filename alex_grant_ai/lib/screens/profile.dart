@@ -1,4 +1,11 @@
+import 'package:alex_grant_ai/screens/termsOfService.dart';
+import 'package:alex_grant_ai/screens/viewSubscription.dart';
 import 'package:flutter/material.dart';
+
+import 'currentChangePinScreen.dart';
+import 'editprofile.dart';
+import 'language.dart';
+import 'notification_setting.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -92,8 +99,14 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
                     padding: EdgeInsets.zero,
@@ -115,37 +128,64 @@ class SettingsScreen extends StatelessWidget {
           _buildSettingItem(
             icon: Icons.language,
             title: 'Language Preference',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LanguagePreferenceScreen()),
+              );
+            },
           ),
           _buildDivider(),
           _buildSettingItem(
             icon: Icons.notifications_none,
             title: 'Notifications and Systems',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NotificationsAndSystemsScreen()),
+              );
+            },
           ),
           _buildDivider(),
           _buildSettingItem(
             icon: Icons.shield_outlined,
             title: 'Security',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CurrentChangePinScreen()),
+              );
+            },
           ),
           _buildDivider(),
           _buildSettingItem(
             icon: Icons.credit_card,
             title: 'Subscription',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SubscriptionScreen()),
+              );
+            },
           ),
           _buildDivider(),
           _buildSettingItem(
             icon: Icons.description_outlined,
             title: 'Terms of Service',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TermsOfServiceScreen()),
+              );
+            },
           ),
           _buildDivider(),
           _buildSettingItem(
             icon: Icons.delete_outline,
             title: 'Delete Account',
-            onTap: () {},
+            onTap: () {
+              showDeleteAccountPopup(context);
+            },
           ),
           _buildDivider(),
 
@@ -219,6 +259,56 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+
+  void showDeleteAccountPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          backgroundColor: Colors.black,
+          title: Text(
+            'Delete Your Account',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Deleting your Alex account will permanently remove all your data, including chats, documents, and preferences.\n\nThis action cannot be undone.',
+                style: TextStyle(color: Colors.white70, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+                onPressed: () {
+                  // Add your delete logic here
+                  Navigator.of(context).pop(); // Close the popup
+                },
+                child: Text(
+                  'Delete Account',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
   Widget _buildSettingItem({
     required IconData icon,
     required String title,
@@ -271,4 +361,7 @@ class SettingsScreen extends StatelessWidget {
       thickness: 1,
     );
   }
+
+
+
 }

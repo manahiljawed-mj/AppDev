@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:alex_grant_ai/screens/profile.dart';
 import 'package:alex_grant_ai/screens/voice.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'mic.dart';
 import 'history.dart';
 import 'notification.dart'; // Import the HistoryScreen class
@@ -15,6 +18,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  // File upload related
+  File? _selectedFile;
+  final ImagePicker _picker = ImagePicker();
   final List<Map<String, String>> _messages = [
     {'sender': 'agent', 'text': 'What topic would you like to be generated for you today?'}
   ];
@@ -120,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               children: [
                                 IconButton(
                                   icon: const Icon(Icons.share, color: Colors.white54, size: 20),
-                                  onPressed: () {},
+                                  onPressed: showTopMessage,
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.copy, color: Colors.white54, size: 20),
@@ -138,7 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               children: [
                                 IconButton(
                                   icon: const Icon(Icons.share, color: Colors.white54, size: 20),
-                                  onPressed: () {},
+                                  onPressed: showTopMessage,
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.copy, color: Colors.white54, size: 20),
@@ -165,7 +171,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.attach_file, color: Colors.white),
-                    onPressed: () {},
+                    onPressed: _showFileUploadDialog,
                   ),
                   IconButton(
                     icon: const Icon(Icons.qr_code_scanner, color: Colors.white),
@@ -227,6 +233,149 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+  }
+
+  // Show file upload dialog
+  void _showFileUploadDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.grey[900],
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey[700]!,
+                      width: 2,
+                      // style: BorderStyle.dashed,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.picture_as_pdf,
+                        size: 48,
+                        color: Colors.red[400],
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Drag your image here or',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      TextButton(
+                        onPressed: _pickFile,
+                        child: const Text(
+                          'browse',
+                          style: TextStyle(color: Colors.purple),
+                        ),
+                      ),
+                      const Text(
+                        'supports: JPG, PNG',
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showTopMessage() {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 0,
+        right: 0,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.green, // Background color
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.white),
+                  SizedBox(width: 12.0),
+                  Expanded(
+                    child: Text(
+                      "Link Copied",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Insert overlay entry
+    overlay?.insert(overlayEntry);
+
+    // Remove it after a duration
+    Future.delayed(Duration(seconds: 3)).then((_) {
+      overlayEntry.remove();
+    });
+  }
+  // Pick file using image picker
+  Future<void> _pickFile() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() {
+          _selectedFile = File(image.path);
+        });
+        // Handle the selected file (e.g., upload it or display it)
+        Navigator.pop(context); // Close dialog after selection
+      }
+    } catch (e) {
+      print('Error picking file: $e');
+    }
   }
 
   // Action card widget
