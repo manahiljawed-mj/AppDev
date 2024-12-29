@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 
+import 'profile.dart';
+
 class ConfirmNewPinScreen extends StatefulWidget {
+  final String initialPin;
+
+  ConfirmNewPinScreen({required this.initialPin});
+
   @override
   _ConfirmNewPinScreen createState() => _ConfirmNewPinScreen();
 }
 
 class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
   List<String> pin = [];
+  bool isSuccess = false;
 
   void _onNumberTap(String number) {
     if (pin.length < 6) {
       setState(() {
         pin.add(number);
       });
+      if (pin.length == 6) {
+        _checkPin();
+      }
     }
   }
 
@@ -20,6 +30,26 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
     if (pin.isNotEmpty) {
       setState(() {
         pin.removeLast();
+      });
+    }
+  }
+
+  void _checkPin() {
+    String enteredPin = pin.join('');
+    if (enteredPin == widget.initialPin) {
+      setState(() {
+        isSuccess = true;
+      });
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.pop(
+            context, true); // Optionally navigate back or show further actions
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PIN does not match. Try again.')),
+      );
+      setState(() {
+        pin.clear();
       });
     }
   }
@@ -43,25 +73,82 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Confirm New Pin',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      body: isSuccess ? _buildSuccessScreen() : _buildPinEntryScreen(),
+    );
+  }
+
+  Widget _buildPinEntryScreen() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Confirm New Pin',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 20),
+          _buildPinDots(),
+          Spacer(),
+          _buildNumberPad(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSuccessScreen() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TweenAnimationBuilder(
+            tween: Tween<double>(begin: 0, end: 1),
+            duration: Duration(seconds: 1),
+            builder: (context, value, child) {
+              return Icon(
+                Icons.check_circle,
+                color: Colors.purple,
+                size: 100 * value,
+              );
+            },
+          ),
+          SizedBox(height: 20),
+          Text(
+            'You have successfully changed your pin!',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-            SizedBox(height: 20),
-            _buildPinDots(),
-            Spacer(),
-            _buildNumberPad(),
-          ],
-        ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              child: Text(
+                'Done',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'enterNewPinScreen.dart';
+
 class CurrentChangePinScreen extends StatefulWidget {
   @override
   _CurrentChangePinScreen createState() => _CurrentChangePinScreen();
@@ -13,6 +15,13 @@ class _CurrentChangePinScreen extends State<CurrentChangePinScreen> {
       setState(() {
         pin.add(number);
       });
+    }
+    if (pin.length == 6) {
+      // Navigate to the new screen once the pin is entered
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EnterNewPinScreen()),
+      );
     }
   }
 

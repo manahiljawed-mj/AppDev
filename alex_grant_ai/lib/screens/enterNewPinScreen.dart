@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'confirmNewPinScreen.dart';
+import 'confirmNewPinScreen.dart'; // Import the ConfirmNewPinScreen
 
 class EnterNewPinScreen extends StatefulWidget {
   @override
@@ -13,6 +15,9 @@ class _EnterNewPinScreen extends State<EnterNewPinScreen> {
       setState(() {
         pin.add(number);
       });
+      if (pin.length == 6) {
+        _navigateToConfirmPinScreen();
+      }
     }
   }
 
@@ -22,6 +27,16 @@ class _EnterNewPinScreen extends State<EnterNewPinScreen> {
         pin.removeLast();
       });
     }
+  }
+
+  void _navigateToConfirmPinScreen() {
+    String newPin = pin.join('');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ConfirmNewPinScreen(initialPin: newPin),
+      ),
+    );
   }
 
   @override
