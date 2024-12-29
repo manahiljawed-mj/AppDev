@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'billingHistory.dart';
+
 class SubscriptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class SubscriptionScreen extends StatelessWidget {
             SizedBox(height: 20),
             _buildFeaturesSection(),
             SizedBox(height: 20),
-            _buildPaymentInfoSection(),
+            _buildPaymentInfoSection(context),
             SizedBox(height: 20),
             _buildAddCardButton(),
           ],
@@ -95,7 +97,7 @@ class SubscriptionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentInfoSection() {
+  Widget _buildPaymentInfoSection(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -115,7 +117,9 @@ class SubscriptionScreen extends StatelessWidget {
             children: [
               Text('Next Payment Date', style: TextStyle(color: Colors.grey)),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  
+                },
                 child: Text(
                   'View History',
                   style: TextStyle(color: Colors.purple),

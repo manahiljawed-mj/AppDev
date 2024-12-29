@@ -1,3 +1,4 @@
+import 'package:alex_grant_ai/screens/subscriptionMenu.dart';
 import 'package:alex_grant_ai/screens/termsOfService.dart';
 import 'package:alex_grant_ai/screens/viewSubscription.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +165,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SubscriptionScreen()),
+                MaterialPageRoute(builder: (context) => ManageSubscriptionScreen()),
               );
             },
           ),
