@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'profile.dart';
+
 class ConfirmNewPinScreen extends StatefulWidget {
   final String initialPin;
 
@@ -39,7 +41,8 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
         isSuccess = true;
       });
       Future.delayed(Duration(seconds: 2), () {
-        Navigator.pop(context, true); // Optionally navigate back or show further actions
+        Navigator.pop(
+            context, true); // Optionally navigate back or show further actions
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -126,7 +129,10 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.purple,
