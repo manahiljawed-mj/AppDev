@@ -6,6 +6,7 @@ import 'currentChangePinScreen.dart';
 import 'editprofile.dart';
 import 'language.dart';
 import 'notification_setting.dart';
+import 'manageSubscription.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -44,7 +45,6 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.grey,
@@ -99,12 +99,12 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen()),
                     );
                   },
                   style: TextButton.styleFrom(
@@ -131,7 +131,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LanguagePreferenceScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const LanguagePreferenceScreen()),
               );
             },
           ),
@@ -142,7 +143,9 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationsAndSystemsScreen()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const NotificationsAndSystemsScreen()),
               );
             },
           ),
@@ -153,7 +156,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CurrentChangePinScreen()),
+                MaterialPageRoute(
+                    builder: (context) => CurrentChangePinScreen()),
               );
             },
           ),
@@ -164,7 +168,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SubscriptionScreen()),
+                MaterialPageRoute(
+                    builder: (context) => ManageSubscriptionScreen()),
               );
             },
           ),
@@ -175,7 +180,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TermsOfServiceScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const TermsOfServiceScreen()),
               );
             },
           ),
@@ -259,14 +265,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-
   void showDeleteAccountPopup(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
           backgroundColor: Colors.black,
           title: Text(
             'Delete Your Account',
@@ -292,7 +298,8 @@ class SettingsScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                 ),
                 onPressed: () {
                   // Add your delete logic here
@@ -300,7 +307,8 @@ class SettingsScreen extends StatelessWidget {
                 },
                 child: Text(
                   'Delete Account',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -309,6 +317,7 @@ class SettingsScreen extends StatelessWidget {
       },
     );
   }
+
   Widget _buildSettingItem({
     required IconData icon,
     required String title,
@@ -361,7 +370,4 @@ class SettingsScreen extends StatelessWidget {
       thickness: 1,
     );
   }
-
-
-
 }

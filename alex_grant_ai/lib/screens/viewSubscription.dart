@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'subscriptionPricing.dart'; // Import the PricingScreen
+import 'manageDebitCardScreen.dart'; // Import the ManageSubscriptionScreen
 
 class SubscriptionScreen extends StatelessWidget {
+  final String selectedPlan;
+
+  SubscriptionScreen({this.selectedPlan = 'Yearly Plan'});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,29 +31,34 @@ class SubscriptionScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildPlanSection(),
+            _buildPlanSection(context),
             SizedBox(height: 20),
             _buildFeaturesSection(),
             SizedBox(height: 20),
             _buildPaymentInfoSection(),
             SizedBox(height: 20),
-            _buildAddCardButton(),
+            _buildAddCardButton(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPlanSection() {
+  Widget _buildPlanSection(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Yearly Plan',
+          selectedPlan,
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PricingScreen()),
+            );
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.purple,
             shape: RoundedRectangleBorder(
@@ -72,25 +83,25 @@ class SubscriptionScreen extends StatelessWidget {
     return Column(
       children: features
           .map((feature) => Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.grey[850],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.check_circle, color: Colors.purple, size: 20),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                feature,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ))
+                margin: EdgeInsets.symmetric(vertical: 4),
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[850],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.check_circle, color: Colors.purple, size: 20),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        feature,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ))
           .toList(),
     );
   }
@@ -178,10 +189,17 @@ class SubscriptionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAddCardButton() {
+  Widget _buildAddCardButton(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ManageSubscriptionScreen(),
+            ),
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.purple,
           shape: RoundedRectangleBorder(
