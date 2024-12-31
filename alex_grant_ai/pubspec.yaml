@@ -38,6 +38,8 @@ dependencies:
   country_picker: ^2.0.0
   cupertino_icons: ^1.0.8
   countries_flag: ^1.0.0
+  http: ^1.2.2
+  dio: ^5.7.0
 
 dev_dependencies:
   flutter_test:

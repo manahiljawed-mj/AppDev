@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:alex_grant_ai/screens/profile.dart';
 import 'package:alex_grant_ai/screens/voice.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +46,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   // Boolean to track if user has entered a prompt or not
   bool _hasEnteredPrompt = false;
+
+  // Sample token and user details
+  final String token = "your-auth-token";
+  final String userId = "userId123";
+  final String sessionId = "sessionId123";
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +259,76 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  // Updated send message function
+  Future<void> _sendMessage() async {
+    final message = _controller.text.trim();
+    if (message.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Message cannot be empty")),
+      );
+      return;
+    }
+
+    setState(() {
+      _messages.add({'sender': 'user', 'text': message});
+      _controller.clear();
+      _hasEnteredPrompt = true;
+    });
+
+    try {
+      final response = await createChatWithMessage(
+        token: token,
+        userId: userId,
+        sessionId: sessionId,
+        message: message,
+        contentType: 0, // Text message
+        chatType: 0, // Chat type
+      );
+
+      setState(() {
+        _messages.add({'sender': 'agent', 'text': response['response']});
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to send message: $e")),
+      );
+    }
+  }
+
+  // Backend call
+  Future<Map<String, dynamic>> createChatWithMessage({
+    required String token,
+    required String userId,
+    required String sessionId,
+    required String message,
+    required int contentType,
+    required int chatType,
+  }) async {
+    final url = Uri.parse("http://localhost:3000/chat/");
+
+    final response = await http.post(
+      url,
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        "userId": userId,
+        "sessionId": sessionId,
+        "message": message,
+        "contentType": contentType,
+        "chatType": chatType,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return jsonDecode(response.body)["data"];
+    } else {
+      throw Exception(
+          "Failed to create chat. Status: ${response.statusCode}, Body: ${response.body}");
+    }
+  }
+
   // Show file upload dialog
   void _showFileUploadDialog() {
     showDialog(
@@ -424,21 +502,21 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // Send message function
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
-      setState(() {
-        _messages.add({'sender': 'user', 'text': _controller.text});
-        _messages.add({
-          'sender': 'agent',
-          'text':
-              'This is a dummy response to your prompt: "${_controller.text}"',
-        });
-        _controller.clear();
-        _hasEnteredPrompt =
-            true; // Disable cards after the first prompt is entered
-      });
-    }
-  }
+  // void _sendMessage() {
+  //   if (_controller.text.isNotEmpty) {
+  //     setState(() {
+  //       _messages.add({'sender': 'user', 'text': _controller.text});
+  //       _messages.add({
+  //         'sender': 'agent',
+  //         'text':
+  //             'This is a dummy response to your prompt: "${_controller.text}"',
+  //       });
+  //       _controller.clear();
+  //       _hasEnteredPrompt =
+  //           true; // Disable cards after the first prompt is entered
+  //     });
+  //   }
+  // }
 
   // Navigation button for bottom bar
   Widget _buildNavButton(IconData icon, String label, String value) {
