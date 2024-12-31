@@ -1,5 +1,10 @@
   import 'package:alex_grant_ai/screens/otp.dart';
   import 'package:flutter/material.dart';
+  import 'package:http/http.dart' as http;
+  import 'dart:convert';
+
+  String userEmail = ''; // Declare the global email variable
+  String userName = ''; // Declare the global email variable
 
   class Password extends StatelessWidget {
     const Password({super.key});
@@ -9,11 +14,11 @@
       return MaterialApp(
         debugShowCheckedModeBanner: false, // Remove the debug banner
         theme: ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
         ),
         home: Scaffold(
           body: SingleChildScrollView( // Wrap the content with SingleChildScrollView
-            child: PasswordState(),
+            child: PasswordState(username:'',email: '',),
           ),
         ),
       );
@@ -21,7 +26,10 @@
   }
 
   class PasswordState extends StatefulWidget {
-    const PasswordState({super.key});
+    final String email; // Declare the email parameter
+    final String username; // Declare the email parameter
+    // const PasswordState({super.key});
+    PasswordState({required this.username,required this.email});
 
     @override
     _PasswordState createState() => _PasswordState();
@@ -30,6 +38,65 @@
   class _PasswordState extends State<PasswordState> {
     final TextEditingController passwordController = TextEditingController();
     bool _isPasswordVisible = false; // Track password visibility
+    bool _isLoading = false; // Track password visibility
+
+    @override
+    void initState() {
+      super.initState();
+
+      userEmail = widget.email; // Assign the email to global variable
+      userName=widget.username;
+    }
+
+    Future<void> _createUser(String password) async {
+      setState(() {
+        _isLoading = true;
+      });
+
+      const String apiUrl = "http://localhost:5000/user/create-user";
+      print('password $password userName $userName userEmail $userEmail');
+
+      try {
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            "username":userName, // passed from previous screen
+            "email": userEmail, // passed from previous screen
+            "password": password, // entered password
+          }),
+        );
+
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        // Handle response
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          final responseData = jsonDecode(response.body);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseData["message"])),
+          );
+          Navigator.pop(context);
+          _showAccountCreatedSuccessfulModal(context);
+          // Navigator.pop(context); // Navigate back or to the next screen after signup
+        } else {
+          final errorData = jsonDecode(response.body);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(errorData["message"])),
+          );
+        }
+      } catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        print('Error during user creation: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("An error occurred while creating the user")),
+        );
+      }
+    }
 
     @override
     Widget build(BuildContext context) {
@@ -171,8 +238,8 @@
                                                 decoration: InputDecoration(
                                                   hintText: 'Your Password',
                                                   hintStyle: TextStyle(
-                                                    color: Color(0xFFF8FAFC),
-                                                    fontSize: 16,
+                                                      color: Color(0xFFF8FAFC),
+                                                      fontSize: 16,
                                                       fontFamily: 'Euclid Circular A'
                                                   ),
                                                   border: InputBorder.none,
@@ -243,9 +310,23 @@
                                   ),
                                 ),
                                 child: InkWell(
-                                  onTap: () {
-                                    print('Button clicked!');
-                                    _showTermsModal(context);
+                                  onTap: () async {
+                                    final String password = passwordController.text.trim();
+                                    if (password.isEmpty) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text("Please enter a password")),
+                                      );
+                                      return;
+                                    }
+                                    // Show the terms modal and pass the password
+                                    _showTermsModal(
+                                      context,
+                                      password,
+                                          () {
+                                        // Callback function that is triggered after terms acceptance
+                                        _createUser(password); // Call _createUser once terms are accepted
+                                      },
+                                    );
                                     // Add your onTap logic here
                                   },
                                   child: Center(
@@ -280,7 +361,8 @@
   }
 
   // Function to show the modal
-  void _showTermsModal(BuildContext context) {
+  void _showTermsModal(BuildContext context, String password, Function onAccept) {
+
     showDialog(
       context: context,
       barrierDismissible: false, // Prevent closing the modal by tapping outside
@@ -366,9 +448,8 @@
                   const SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () {
-                      // Perform any action you need when clicking Continue
-                      Navigator.of(context).pop(); // Close the modal
-                      _showAccountCreatedSuccessfulModal(context);
+                      Navigator.of(context).pop(); // Close the dialog if they accept
+                      onAccept(); // Call the callback to trigger the creation
 
                     },
                     style: ElevatedButton.styleFrom(
@@ -514,7 +595,7 @@
 
           SizedBox(height: 8),
           Text(
-            'adelia.larsson@mail.com',
+            userEmail,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -629,7 +710,8 @@
 
           SizedBox(height: 12),
           Text(
-            'To continue, please verify your account. We have sent a verification code to',
+            'To continue, please verify your account. We have sent a verification code to'
+                +userEmail,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xFFE4E6EB),
@@ -639,6 +721,7 @@
               height: 1.38,
               decoration: TextDecoration.none,  // Add this line to remove any underline
             ),
+
           ),
           SizedBox(height: 32),
           SizedBox(
@@ -646,6 +729,7 @@
             height: 50,// Specify the desired width
             child: ElevatedButton(
               onPressed: () {
+
                 Navigator.of(context).pop(); // Close modal
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -680,12 +764,3 @@
       );
     }
   }
-
-
-
-
-
-
-
-
-
