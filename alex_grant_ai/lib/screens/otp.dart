@@ -15,7 +15,7 @@ class Otp extends StatelessWidget {
       ),
       home: Scaffold(
         body: SingleChildScrollView(
-          child: OtpState(),
+          child: OtpState(email: '',),
         ),
       ),
     );
@@ -23,7 +23,8 @@ class Otp extends StatelessWidget {
 }
 
 class OtpState extends StatefulWidget {
-  const OtpState({super.key});
+  final String email;
+  const OtpState({required this.email});
 
   @override
   _OtpState createState() => _OtpState();

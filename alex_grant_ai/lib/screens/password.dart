@@ -5,6 +5,7 @@
 
   String userEmail = ''; // Declare the global email variable
   String userName = ''; // Declare the global email variable
+  String userId = ''; // Declare the global email variable
 
   class Password extends StatelessWidget {
     const Password({super.key});
@@ -44,8 +45,8 @@
     void initState() {
       super.initState();
 
-      userEmail = widget.email; // Assign the email to global variable
-      userName=widget.username;
+      userEmail = widget.username; // Assign the email to global variable
+      userName=widget.email;
     }
 
     Future<void> _createUser(String password) async {
@@ -75,6 +76,7 @@
         // Handle response
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responseData = jsonDecode(response.body);
+          userId=responseData["user"]["userId"];
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(responseData["message"])),
           );
@@ -688,6 +690,52 @@
     );
   }
   class VerifyIdentity extends StatelessWidget {
+    Future<void> otpApi(BuildContext context) async {
+      const String apiUrl = 'http://localhost:5000/otp/generate-otp'; // Replace with your API URL
+      final otp = "123456"; // Replace this with your OTP generation logic
+      final userId = userEmail; // Replace with actual user ID
+      final sessionId = "exampleSessionId"; // Replace with actual session ID
+
+      try {
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            "userId": userId,
+            "email": userEmail,
+            "sessionId": sessionId,
+            "otp": otp,
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          // API call successful
+          final responseBody = jsonDecode(response.body);
+          print("OTP generated successfully: ${responseBody['data']}");
+
+          // Navigate to OTP verification page
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => OtpState(email: userEmail),
+            ),
+          );
+        } else {
+          // API returned an error
+          final responseBody = jsonDecode(response.body);
+          print("Error: ${responseBody['message']}");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Error: ${responseBody['message']}")),
+          );
+        }
+      } catch (error) {
+        // Handle network or other errors
+        print("Error: $error");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to generate OTP. Please try again.")),
+        );
+      }
+    }
+
     @override
     Widget build(BuildContext context) {
       return Column(
@@ -733,7 +781,9 @@
                 Navigator.of(context).pop(); // Close modal
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => OtpState(), // Replace NewScreen with the screen you want to navigate to
+                    builder: (context) => OtpState(
+                      email:userEmail
+                    ), // Replace NewScreen with the screen you want to navigate to
                   ),
                 );
               },
