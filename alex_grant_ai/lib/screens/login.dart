@@ -197,6 +197,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Call the loginUser function
                     final result = await loginUser(username, password);
 
+
+                    token=result['token'];
+                    print("token received after login:$token");
+
                     // Check if login was successful
                     if (result['status'] == 'success') {
                       // Successful login, navigate to ChatScreen

@@ -1,3 +1,4 @@
+import 'package:alex_grant_ai/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'splash_screen2.dart'; // Import the home screen
 
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), // Replace with your next screen
+        MaterialPageRoute(builder: (context) => LoginScreen()), // Replace with your next screen
       );
     });
   }

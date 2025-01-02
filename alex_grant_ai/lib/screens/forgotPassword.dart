@@ -1,10 +1,84 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:alex_grant_ai/screens/ForgotOtp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+import 'package:http/http.dart' as http;
+import 'package:alex_grant_ai/screens/env.dart';
+
+class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
+  @override
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController _emailController = TextEditingController();
+
+  // Your existing OTP generation logic and other methods here
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  String generateOtp({int length = 4}) {
+    final Random random = Random();
+    String otp = '';
+    for (int i = 0; i < length; i++) {
+      otp += random.nextInt(10).toString(); // Generate a random digit (0-9)
+    }
+    return otp;
+  }
+
+  Future<void> otpApi() async {
+    String userEmail = _emailController.text.trim();
+    const String apiUrl = 'http://localhost:5000/otp/generate-otp'; // Replace with your API URL
+    final otp = generateOtp(); // Replace this with your OTP generation logic
+    final sessionId = userToken; // Replace with actual session ID
+   print("otp:$otp");
+   print("sessionId:$userToken");
+   print("userEmail:$userEmail");
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "userId": userId,
+          "email": userEmail,
+          "sessionId": sessionId,
+          "otp": otp,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // API call successful
+        final responseBody = jsonDecode(response.body);
+        userId=responseBody['userId'];
+        userToken=responseBody['sessionId'];
+        print("OTP generated successfully: ${responseBody['data']}");
+
+        return;
+      } else {
+        // API returned an error
+        final responseBody = jsonDecode(response.body);
+        print("Error: ${responseBody['message']}");
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text("Error: ${responseBody['message']}")),
+        // );
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print("Error: $error");
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text("Failed to generate OTP. Please try again.")),
+      // );
+    }
+  }
 
   void _showRecoveryCodeDialog(BuildContext context) {
     showDialog(
@@ -74,7 +148,6 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,6 +196,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 border: Border.all(color: Colors.grey.shade800),
               ),
               child: TextField(
+                controller: _emailController, // Use the controller here
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: 'Myemail@email.com',
@@ -145,7 +219,10 @@ class ForgotPasswordScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () => _showRecoveryCodeDialog(context),
+                onPressed: () {
+                  otpApi();
+                  _showRecoveryCodeDialog(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF8E44AD), // Purple color
                   padding: const EdgeInsets.symmetric(vertical: 16),
