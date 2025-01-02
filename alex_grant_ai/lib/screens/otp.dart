@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:alex_grant_ai/screens/env.dart';
 import 'login.dart';
+import 'package:http/http.dart' as http;
 
 class Otp extends StatelessWidget {
   const Otp({super.key});
@@ -39,64 +39,13 @@ class _OtpState extends State<OtpState> {
   final List<TextEditingController> otpControllers = List.generate(4, (_) => TextEditingController());
   final List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
 
-  get http => null;
-  String generateOtp({int length = 6}) {
-    final Random random = Random();
-    String otp = '';
-    for (int i = 0; i < length; i++) {
-      otp += random.nextInt(10).toString(); // Generate a random digit (0-9)
-    }
-    return otp;
-  }
-
-  Future<void> otpApi() async {
-    const String apiUrl = 'http://localhost:5000/otp/generate-otp'; // Replace with your API URL
-    final otp = generateOtp(); // Replace this with your OTP generation logic
-    final sessionId = userToken; // Replace with actual session ID
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "userId": userId,
-          "email": userEmail,
-          "sessionId": sessionId,
-          "otp": otp,
-        }),
-      );
-
-      if (response.statusCode == 201) {
-        // API call successful
-        final responseBody = jsonDecode(response.body);
-        print("OTP generated successfully: ${responseBody['data']}");
-
-        return;
-      } else {
-        // API returned an error
-        final responseBody = jsonDecode(response.body);
-        print("Error: ${responseBody['message']}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error: ${responseBody['message']}")),
-        );
-      }
-    } catch (error) {
-      // Handle network or other errors
-      print("Error: $error");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to generate OTP. Please try again.")),
-      );
-    }
-  }
 
   @override
   void initState() {
 
     super.initState();
-    otpApi();
+    // otpApi();
     _startTimer();
-
-
   }
 
   void _startTimer() {
@@ -171,6 +120,37 @@ class _OtpState extends State<OtpState> {
       focusNode.dispose();
     }
     super.dispose();
+  }
+
+  Future<void> verifyOtp() async {
+    const String url = "http://localhost:5000/otp/verify-otp";
+    // Replace with your API endpoint
+
+    try {
+      String otp=otpControllers.map((controller) => controller.text).join();
+      // Prepare request body
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "otp": int.parse(otp),
+          "uId": userId,
+          "sessionId": userToken,
+        }),
+      );
+      print("response:$otp");
+      print("response:$userId");
+      print("response:$userToken");
+      // Handle the response
+      if (response.statusCode == 200) {
+        print('OTP verified successfully: ${response.body}');
+        _showOtpVerifiedSuccessfullyModal(context);
+      } else {
+        print('Failed to verify OTP: ${response.body}');
+      }
+    } catch (e) {
+      print('Error occurred while verifying OTP: $e');
+    }
   }
 
   @override
@@ -276,7 +256,7 @@ class _OtpState extends State<OtpState> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: 'adelia.larsson@mail.com',
+                                      text: userEmail,
                                       style: TextStyle(
                                         color: Color(0xFFE4E6EB),
                                         fontSize: 16,
@@ -420,8 +400,8 @@ class _OtpState extends State<OtpState> {
                               onTap: () {
 
                                 print('Button clicked!');
+                                verifyOtp();
                                 // Add your onTap logic here
-                                _showOtpVerifiedSuccessfullyModal(context);
                               },
                               child: Center(
                                 child: Text(

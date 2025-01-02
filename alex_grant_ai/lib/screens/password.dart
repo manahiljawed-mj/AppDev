@@ -689,6 +689,57 @@
     );
   }
   class VerifyIdentity extends StatelessWidget {
+    String generateOtp({int length = 4}) {
+      final Random random = Random();
+      String otp = '';
+      for (int i = 0; i < length; i++) {
+        otp += random.nextInt(10).toString(); // Generate a random digit (0-9)
+      }
+      return otp;
+    }
+
+    Future<void> otpApi() async {
+      const String apiUrl = 'http://localhost:5000/otp/generate-otp'; // Replace with your API URL
+      final otp = generateOtp(); // Replace this with your OTP generation logic
+      final sessionId = userToken; // Replace with actual session ID
+
+      try {
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            "userId": userId,
+            "email": userEmail,
+            "sessionId": sessionId,
+            "otp": otp,
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          // API call successful
+          final responseBody = jsonDecode(response.body);
+          userId=responseBody['userId'];
+          userToken=responseBody['sessionId'];
+          print("OTP generated successfully: ${responseBody['data']}");
+
+          return;
+        } else {
+          // API returned an error
+          final responseBody = jsonDecode(response.body);
+          print("Error: ${responseBody['message']}");
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text("Error: ${responseBody['message']}")),
+          // );
+        }
+      } catch (error) {
+        // Handle network or other errors
+        print("Error: $error");
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text("Failed to generate OTP. Please try again.")),
+        // );
+      }
+    }
+
     @override
     Widget build(BuildContext context) {
       return Column(
@@ -731,6 +782,7 @@
             child: ElevatedButton(
               onPressed: ()  {
                 // Show a loading indicator if needed
+                otpApi();
                 Navigator.of(context).pop(); // Close modal
                 Navigator.of(context).push(
                   MaterialPageRoute(

@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'chat.dart';
 import 'forgotPassword.dart'; // Import the ChatScreen file
+import 'package:alex_grant_ai/screens/env.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,6 +18,57 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _rememberMe = false;
+
+  Future<Map<String, dynamic>> loginUser(String username, String password) async {
+    final String apiUrl = 'http://localhost:5000/user/login'; // Replace with your API URL
+
+    // Prepare the request body
+    final Map<String, String> body = {
+      'username': username,
+      'password': password,
+    };
+
+    // Make the POST request
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(body),
+      );
+
+      if (response.statusCode == 200) {
+        // Successful response
+        final Map<String, dynamic> responseBody = json.decode(response.body);
+        return {
+          'status': 'success',
+          'message': responseBody['message'],
+          'token': responseBody['token'],
+          'user': responseBody['user'],
+        };
+      } else if (response.statusCode == 400 || response.statusCode == 404 || response.statusCode == 401) {
+        // Handle errors based on status codes
+        final Map<String, dynamic> responseBody = json.decode(response.body);
+        return {
+          'status': 'error',
+          'message': responseBody['message'],
+        };
+      } else {
+        // Unknown error
+        return {
+          'status': 'error',
+          'message': 'Something went wrong. Please try again.',
+        };
+      }
+    } catch (e) {
+      // Handle any exceptions
+      return {
+        'status': 'error',
+        'message': 'An error occurred: $e',
+      };
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: const Icon(Icons.close, color: Colors.white, size: 24),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                onPressed: () {},
+                onPressed: () {
+
+                },
               ),
               const SizedBox(height: 24),
 
@@ -131,11 +188,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ChatScreen()),
-                    );
+                  onPressed: () async {
+
+                    // Get the username and password from the controllers
+                    String username = _usernameController.text;
+                    String password = _passwordController.text;
+
+                    // Call the loginUser function
+                    final result = await loginUser(username, password);
+
+                    // Check if login was successful
+                    if (result['status'] == 'success') {
+                      // Successful login, navigate to ChatScreen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ChatScreen()),
+                      );
+                    } else {
+                      // Handle the error message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(result['message'])),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF5E216D),
