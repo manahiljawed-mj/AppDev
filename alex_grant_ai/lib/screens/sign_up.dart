@@ -601,12 +601,16 @@ class SignUpState extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PasswordState(), // Replace NewPage with your desired page
+
+                              builder: (context) => PasswordState(
+                                username: usernameController.text,
+                                email: emailController.text,
+                              )
                             ),
                           );
                           // Add your onTap logic here
                         },
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'Continue',
                             textAlign: TextAlign.center,
