@@ -52,7 +52,7 @@
         _isLoading = true;
       });
 
-      const String apiUrl = "http://localhost:5000/user/create-user";
+      const String apiUrl = "http://localhost:3000/user/create-user";
       print('password $password userName $userName userEmail $userEmail');
 
       try {
@@ -60,9 +60,9 @@
           Uri.parse(apiUrl),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
-            "username":userName, // passed from previous screen
-            "email": userEmail, // passed from previous screen
-            "password": password, // entered password
+            "username": userName ?? "", // Default to empty string if null
+            "email": userEmail ?? "", // Default to empty string if null
+            "password": password ?? "", // Default to empty string if null// entered password
           }),
         );
 
@@ -71,11 +71,13 @@
           _isLoading = false;
         });
 
+
+        print("Status code: ${response.statusCode}");
         // Handle response
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responseData = jsonDecode(response.body);
           userToken=responseData["token"];
-          userId=responseData["user"]["userId"];
+          userId=responseData["user"]["id"];
           print('userId $userId');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(responseData["message"])),
@@ -314,6 +316,8 @@
                                 child: InkWell(
                                   onTap: () async {
                                     final String password = passwordController.text.trim();
+
+                                    userPassword=password;
                                     if (password.isEmpty) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text("Please enter a password")),
@@ -699,7 +703,7 @@
     }
 
     Future<void> otpApi() async {
-      const String apiUrl = 'http://localhost:5000/otp/generate-otp'; // Replace with your API URL
+      const String apiUrl = 'http://localhost:3000/otp/generate-otp'; // Replace with your API URL
       final otp = generateOtp(); // Replace this with your OTP generation logic
       final sessionId = userToken; // Replace with actual session ID
 
@@ -718,8 +722,8 @@
         if (response.statusCode == 201) {
           // API call successful
           final responseBody = jsonDecode(response.body);
-          userId=responseBody['userId'];
-          userToken=responseBody['sessionId'];
+          userId=responseBody['data']["userId"];
+          userToken=responseBody['data']['sessionId'];
           print("OTP generated successfully: ${responseBody['data']}");
 
           return;

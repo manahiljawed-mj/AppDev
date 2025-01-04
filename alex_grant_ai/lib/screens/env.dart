@@ -4,3 +4,4 @@ String userName = ''; // Declare the global email variable
 String userId = ''; // Declare the global email variable
 String userToken='';
 String token='';
+String userPassword="";

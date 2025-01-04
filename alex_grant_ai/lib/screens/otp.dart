@@ -123,7 +123,7 @@ class _OtpState extends State<OtpState> {
   }
 
   Future<void> verifyOtp() async {
-    const String url = "http://localhost:5000/otp/verify-otp";
+    const String url = "http://localhost:3000/otp/verify-otp";
     // Replace with your API endpoint
 
     try {
