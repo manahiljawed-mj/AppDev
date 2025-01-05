@@ -451,6 +451,7 @@
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the dialog if they accept
                       onAccept(); // Call the callback to trigger the creation
+
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF5E216D), // Set background color here

@@ -25,7 +25,7 @@ class Otp extends StatelessWidget {
 }
 
 class OtpState extends StatefulWidget {
-  const OtpState();
+  const OtpState({super.key});
 
   @override
   _OtpState createState() => _OtpState();
