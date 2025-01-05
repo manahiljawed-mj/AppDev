@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'package:alex_grant_ai/screens/login.dart';
 import 'package:alex_grant_ai/screens/subscriptionMenu.dart';
 import 'package:alex_grant_ai/screens/termsOfService.dart';
 import 'package:alex_grant_ai/screens/viewSubscription.dart';
+import 'package:http/http.dart' as http;
+import 'package:alex_grant_ai/screens/env.dart';
 import 'package:flutter/material.dart';
-
 import 'currentChangePinScreen.dart';
 import 'editprofile.dart';
 import 'language.dart';
@@ -45,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    
+
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.grey,
@@ -80,9 +83,9 @@ class SettingsScreen extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children:  [
                       Text(
-                        'Durodola Anuoluwapo',
+                        userName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -91,7 +94,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 2),
                       Text(
-                        'adelia.larsson@mail.com',
+                        userEmail,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 13,
@@ -184,9 +187,13 @@ class SettingsScreen extends StatelessWidget {
           _buildSettingItem(
             icon: Icons.delete_outline,
             title: 'Delete Account',
-            onTap: () {
-              showDeleteAccountPopup(context);
+            onTap: () async {
+              showDeleteAccountPopup(
+                context
+              );
+
             },
+
           ),
           _buildDivider(),
 
@@ -262,6 +269,43 @@ class SettingsScreen extends StatelessWidget {
 
 
   void showDeleteAccountPopup(BuildContext context) {
+    Future<bool> deleteApi() async {
+      const String apiUrl = "http://localhost:5000/user/delete-user";
+
+      try {
+        final response = await http.get(
+          Uri.parse(apiUrl),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $userToken", // Pass the token here
+          },
+        );
+
+        // Handle response
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+          print(responseData["message"]); // Log success message
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(responseData["message"])),
+          // );
+          resetVar();//for reset all
+          return true; // Indicate success
+        } else {
+          final errorData = jsonDecode(response.body);
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(errorData["message"])),
+          // );
+          return false; // Indicate failure
+        }
+      } catch (e) {
+        print('Error during user deletion: $e');
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text("An error occurred while deleting the user")),
+        // );
+        return false; // Indicate failure
+      }
+    }
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -269,7 +313,7 @@ class SettingsScreen extends StatelessWidget {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
           backgroundColor: Colors.black,
-          title: Text(
+          title: const Text(
             'Delete Your Account',
             style: TextStyle(
               color: Colors.white,
@@ -277,7 +321,7 @@ class SettingsScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
@@ -292,17 +336,46 @@ class SettingsScreen extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                onPressed: () {
-                  // Add your delete logic here
-                  Navigator.of(context).pop(); // Close the popup
+                onPressed: () async {
+                  // Close the popup before calling the API
+                  Navigator.of(context).pop();
+
+                  // Call the delete API and handle the result
+                  bool isDeleted = await deleteApi();
+                  if (isDeleted) {
+                    // Show a success message or navigate the user
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Account deleted successfully")),
+                    );
+
+                    Navigator.pop(context); // Go back to the previous screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  } else {
+                    // Show an error message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Failed to delete account")),
+                    );
+                  }
                 },
-                child: Text(
+                child: const Text(
                   'Delete Account',
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the popup
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white70),
               ),
             ),
           ],
@@ -310,6 +383,7 @@ class SettingsScreen extends StatelessWidget {
       },
     );
   }
+
   Widget _buildSettingItem({
     required IconData icon,
     required String title,

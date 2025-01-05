@@ -75,11 +75,10 @@
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responseData = jsonDecode(response.body);
           userToken=responseData["token"];
-          userId=responseData["user"]["userId"];
-          print('userId $userId');
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(responseData["message"])),
-          );
+          userId=responseData["user"]["id"];
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(responseData["message"])),
+          // );
           Navigator.pop(context);
           _showAccountCreatedSuccessfulModal(context);
           // Navigator.pop(context); // Navigate back or to the next screen after signup

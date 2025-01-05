@@ -1,4 +1,7 @@
+import 'package:alex_grant_ai/screens/env.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'profile.dart';
 
@@ -14,6 +17,44 @@ class ConfirmNewPinScreen extends StatefulWidget {
 class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
   List<String> pin = [];
   bool isSuccess = false;
+  bool isLoading = false;
+
+  Future<void> updatePinApi(String newPin) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final url = 'http://localhost:5000/user/update-pin'; // Replace with your API URL
+    final headers = {
+      'Authorization': 'Bearer $userToken',
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({'pin': int.parse(newPin)});
+
+    try {
+      final response = await http.post(Uri.parse(url), headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData['message'] == 'PIN updated successfully.') {
+          setState(() {
+            isSuccess = true;
+          });
+        } else {
+          _showError(responseData['message']);
+        }
+      } else {
+        final responseData = jsonDecode(response.body);
+        _showError(responseData['message']);
+      }
+    } catch (e) {
+      _showError("An error occurred. Please try again.");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   void _onNumberTap(String number) {
     if (pin.length < 6) {
@@ -37,13 +78,7 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
   void _checkPin() {
     String enteredPin = pin.join('');
     if (enteredPin == widget.initialPin) {
-      setState(() {
-        isSuccess = true;
-      });
-      Future.delayed(Duration(seconds: 2), () {
-        Navigator.pop(
-            context, true); // Optionally navigate back or show further actions
-      });
+      updatePinApi(enteredPin);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('PIN does not match. Try again.')),
@@ -52,6 +87,26 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
         pin.clear();
       });
     }
+  }
+
+  void _showError(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -93,6 +148,11 @@ class _ConfirmNewPinScreen extends State<ConfirmNewPinScreen> {
           ),
           SizedBox(height: 20),
           _buildPinDots(),
+          if (isLoading)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CircularProgressIndicator(color: Colors.white),
+            ),
           Spacer(),
           _buildNumberPad(),
         ],

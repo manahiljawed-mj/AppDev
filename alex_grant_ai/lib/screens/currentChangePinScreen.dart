@@ -1,4 +1,7 @@
+import 'package:alex_grant_ai/screens/env.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'enterNewPinScreen.dart';
 
@@ -9,6 +12,47 @@ class CurrentChangePinScreen extends StatefulWidget {
 
 class _CurrentChangePinScreen extends State<CurrentChangePinScreen> {
   List<String> pin = [];
+  bool isLoading = false;
+
+  Future<void> verifyPinApi(String enteredPin) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final url = 'http://localhost:5000/user/verify-pin'; // Replace with your API URL
+
+    final headers = {
+      'Authorization': 'Bearer $userToken',
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({'pin': enteredPin});
+
+    try {
+      final response = await http.post(Uri.parse(url), headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData['message'] == 'Pin verified successfully.') {
+          // Navigate to the new screen once the pin is verified
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EnterNewPinScreen()),
+          );
+        } else {
+          _showError(responseData['message']);
+        }
+      } else {
+        final responseData = jsonDecode(response.body);
+        _showError(responseData['message']);
+      }
+    } catch (e) {
+      _showError("An error occurred. Please try again.");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   void _onNumberTap(String number) {
     if (pin.length < 6) {
@@ -17,11 +61,8 @@ class _CurrentChangePinScreen extends State<CurrentChangePinScreen> {
       });
     }
     if (pin.length == 6) {
-      // Navigate to the new screen once the pin is entered
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => EnterNewPinScreen()),
-      );
+      String enteredPin = pin.join('');
+      verifyPinApi(enteredPin);
     }
   }
 
@@ -31,6 +72,26 @@ class _CurrentChangePinScreen extends State<CurrentChangePinScreen> {
         pin.removeLast();
       });
     }
+  }
+
+  void _showError(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -67,6 +128,11 @@ class _CurrentChangePinScreen extends State<CurrentChangePinScreen> {
             ),
             SizedBox(height: 20),
             _buildPinDots(),
+            if (isLoading)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: CircularProgressIndicator(color: Colors.white),
+              ),
             Spacer(),
             _buildNumberPad(),
           ],
@@ -149,4 +215,3 @@ extension on List {
     return chunks;
   }
 }
-
